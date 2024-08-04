@@ -7,7 +7,9 @@ import pkg_resources
 
 from xblock.core import XBlock
 from xblock.fields import Scope, Dict, String
-from xblock.fragment import Fragment
+from web_fragments.fragment import Fragment
+from xblock.utils.resources import ResourceLoader
+
 
 from lxml import etree
 
@@ -21,6 +23,7 @@ class FlashcardsXBlock(XBlock):
     The content (the values between the <flashcards> tags) is saved as a
     dictionary and passed as a dictionary to the HTML template
     """
+    loader = ResourceLoader(__name__)
     title = String(
             default=u"Flashcards title",
             scope=Scope.settings,
@@ -47,9 +50,10 @@ class FlashcardsXBlock(XBlock):
             'title': self.title,
         }
 
-        frag = Fragment()
-        template = env.get_template("flashcards.html")
-        frag.add_content(template.render(**context))
+        frag = Fragment(self.loader.render_django_template(
+            "static/html/flashcards.html", context=context
+        ))
+        # frag.add_content()
         frag.add_css(self.resource_string("static/css/flashcards.css"))
         frag.add_javascript(self.resource_string("static/js/src/flashcards.js"))
         frag.initialize_js('FlashcardsXBlock')
@@ -112,14 +116,14 @@ class FlashcardsXBlock(XBlock):
     def studio_submit(self, data, suffix=''):
         """Called when submitting the form in Studio."""
         self.title = data.get('title')
-        
+
         flashcards = {}
 
         fclist = data.get('flashcards').items()
-        fclist.reverse() # print out the list in the same order as entered
+        # fclist.reverse() # print out the list in the same order as entered
         for item in fclist:
             front, back = item
-            flashcards[front] = back        
+            flashcards[front] = back
 
         self.content = flashcards
 

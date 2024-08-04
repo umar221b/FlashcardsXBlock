@@ -29,8 +29,9 @@ function FlashcardsXBlock(runtime, element) {
 
         /* If the student reaches the end say FINISHED and disable going further */
         if (current_number == total_number+1) {
-            $('.btn').html('FINISHED!');
+            $('.btn').html('You did it!');
             $('.btn').addClass('finished-btn').removeClass('next-btn').off('click');
         }
     });
 }
+

@@ -5,15 +5,19 @@ function FlashcardsXBlock(runtime, element, params) {
   */
   var currentNumber = -1;
   var totalNumber = params.flashcards.length;
+  $('.fc-container').hide();
 
   /* Show the answer of the question by cliking on the question */
-  $('#fc-question').click(function () {
-    $('#fc-question').html(`${params.flashcards[currentNumber]["back"]}`)
+  $('.fc-card').click(function () {
+    $('.fc-card').toggleClass('is-flipped');
   });
 
   $('.next-btn').click(function () {
     currentNumber++;
+    $('.fc-card').removeClass('is-flipped');
+    $('.fc-container').show();
     $('#fc-question').html(`${params.flashcards[currentNumber]["front"]}`);
+    $('#fc-answer').html(`${params.flashcards[currentNumber]["back"]}`)
     $('#current-fc').html(`${currentNumber + 1}`);
     $('.next-btn').html('Nextt');
     /* If the student reaches the end say FINISHED and disable going further */

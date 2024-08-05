@@ -38,7 +38,7 @@
     list-style: none;
 }
 
-.fc-question {
+#fc-question {
     display:inline-block;
     width:40%;
     padding:5% 3%;
@@ -50,7 +50,7 @@
     margin-right:2%;
 }
 
-.fc-question:hover {
+#fc-question:hover {
     cursor: pointer;
 }
 

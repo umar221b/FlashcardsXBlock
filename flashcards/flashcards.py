@@ -6,12 +6,9 @@ answers (separated by a semicolon) which are then displayed as flashcards.
 import pkg_resources
 
 from xblock.core import XBlock
-from xblock.fields import Scope, Dict, String
+from xblock.fields import Scope, Dict, String, List
 from web_fragments.fragment import Fragment
 from xblock.utils.resources import ResourceLoader
-
-
-from lxml import etree
 
 from jinja2 import Environment, PackageLoader
 
@@ -26,12 +23,12 @@ class FlashcardsXBlock(XBlock):
 
     loader = ResourceLoader(__name__)
     title = String(
-        default="Flashcards title",
+        default="",
         scope=Scope.settings,
         help="Title of the flashcards block",
     )
 
-    content = Dict(default={}, scope=Scope.settings, help="List of items")
+    content = List(default=[], scope=Scope.settings, help="List of items")
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
@@ -53,7 +50,7 @@ class FlashcardsXBlock(XBlock):
         # frag.add_content()
         frag.add_css(self.resource_string("static/css/flashcards.css"))
         frag.add_javascript(self.resource_string("static/js/src/flashcards.js"))
-        frag.initialize_js('FlashcardsXBlock')
+        frag.initialize_js("FlashcardsXBlock", context)
         return frag
 
     @classmethod
@@ -107,22 +104,12 @@ class FlashcardsXBlock(XBlock):
         frag.add_content(template.render(**context))
         frag.add_css(self.resource_string("static/css/flashcards_edit.css"))
         frag.add_javascript(self.resource_string("static/js/src/flashcards_edit.js"))
-        frag.initialize_js("FlashcardsEditXBlock")
+        frag.initialize_js("FlashcardsEditXBlock", context)
         return frag
 
     @XBlock.json_handler
     def studio_submit(self, data, suffix=""):
         """Called when submitting the form in Studio."""
         self.title = data.get("title")
-
-        flashcards = {}
-
-        fclist = data.get("flashcards").items()
-        # fclist.reverse() # print out the list in the same order as entered
-        for item in fclist:
-            front, back = item
-            flashcards[front] = back
-
-        self.content = flashcards
-
+        self.content = data.get("flashcards")
         return {"result": "success"}

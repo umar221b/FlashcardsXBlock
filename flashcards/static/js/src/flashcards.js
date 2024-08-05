@@ -10,7 +10,6 @@ function FlashcardsXBlock(runtime, element, init_args) {
   */
   var current_number = parseInt($('.current-fc').text()) + 1;
   var total_number = parseInt($('.fc-total').text());
-  debugger;
 
   /* Hide all elements for the first iteration */
   $('.flashcards_block li').hide();

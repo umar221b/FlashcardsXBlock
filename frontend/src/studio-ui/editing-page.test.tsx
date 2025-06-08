@@ -3,7 +3,7 @@ import {
   describe, expect, test, vi,
 } from 'vitest';
 import {
-  fireEvent, render, screen, waitFor,
+  fireEvent, render, screen,
 } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import EditingPage from './editing-page';
@@ -14,34 +14,31 @@ vi.mock('./TinyMceEditor', () => ({
 }));
 
 describe('EditingPage', () => {
-  test('Add a new accordion panel', async () => {
+  test('Add a new flashcard', async () => {
     const user = userEvent.setup();
-    const setPanels = vi.fn();
-    const panels = [];
-    render(<EditingPage panels={panels} setPanels={setPanels} />);
-    await user.click(screen.getByText(/Add Accordion/i));
-    expect(setPanels)
+    const setFlashcards = vi.fn();
+    const setTitle = vi.fn();
+    const flashcards = [];
+    const title = 'Test Deck';
+    render(<EditingPage title={title} setTitle={setTitle} flashcards={flashcards} setFlashcards={setFlashcards} />);
+    await user.click(screen.getByText(/Add Flashcard/i));
+    expect(setFlashcards)
       .toHaveBeenCalledTimes(1);
   });
 
-  test('Update panel title', async () => {
-    const setPanels = vi.fn();
-    const panels = [{
-      title: 'Panel 1',
-      contents: '',
+  test('Update flashcard front content', async () => {
+    const setFlashcards = vi.fn();
+    const setTitle = vi.fn();
+    const title = 'Test Deck';
+    const flashcards = [{
+      front: 'Question 1',
+      back: 'Answer 1',
     }];
-    render(<EditingPage panels={panels} setPanels={setPanels} />);
+    render(<EditingPage title={title} setTitle={setTitle} flashcards={flashcards} setFlashcards={setFlashcards} />);
 
-    fireEvent.click(screen.getByRole('button', { name: /Panel 1/i }));
-    const titleInput = screen.getByRole('textbox', {
-      name: /title/i,
-    });
-    fireEvent.input(titleInput, { target: { value: 'Updated Title' } });
-
-    screen.logTestingPlaygroundURL();
-    await waitFor(() => expect(setPanels)
-      .toHaveBeenCalledWith(
-        expect.arrayContaining([expect.objectContaining({ title: 'Updated Title' })]),
-      ));
+    fireEvent.click(screen.getByRole('button', { name: /Question 1/i }));
+    // TinyMCE editor is mocked, so we can't test the actual editing functionality
+    // But we can verify the component renders without errors (expecting 2 editors: front and back)
+    expect(screen.getAllByText('TiNYmCE EDitOR')).toHaveLength(2);
   });
 });

@@ -7,8 +7,9 @@ enum ConfigPage {
 }
 
 interface StudioUiProps {
-  initialPanels: Panel[]
-  initialStyling: PanelStyling
+  initialTitle: string
+  initialFlashcards: Flashcard[]
+  initialStyling: FlashcardStyling
   studioSaveUrl: string
   runtime: XBlockRuntime
 }
@@ -34,23 +35,39 @@ function ActionButtonLink({ className, onClick, label }:ActionButtonLinkProps) {
 }
 
 export default function StudioUi({
-  initialPanels, initialStyling, studioSaveUrl, runtime,
+  initialTitle, initialFlashcards, initialStyling, studioSaveUrl, runtime,
 }: StudioUiProps) {
   const [step, setStep] = React.useState(ConfigPage.Styling);
   const [styling, setStyling] = React.useState(initialStyling);
-  const [panels, setPanels] = React.useState(initialPanels);
+  const [title, setTitle] = React.useState(initialTitle);
+  const [flashcards, setFlashcards] = React.useState(initialFlashcards);
+
   const handleSave = () => {
     runtime.notify('save', { state: 'start' });
-    $.post(studioSaveUrl, JSON.stringify({ styling, panels }));
-    runtime.notify('save', { state: 'end' });
+
+    const flashcardsArray = flashcards.filter(card => card.front && card.back);
+
+    $.post(studioSaveUrl, JSON.stringify({
+      title,
+      flashcards: flashcardsArray,
+    })).done(() => {
+      runtime.notify('save', { state: 'end' });
+    });
   };
+
   return (
-    <div className="xblock-accordion xblock--accordion--editor editor-with-buttons">
+    <div className="xblock-flashcards xblock--flashcards--editor editor-with-buttons">
       <div className="d-flex flex-column" style={{ height: '375px' }}>
         <div className="d-flex flex-column overflow-auto m-2.5">
           {step === ConfigPage.Styling && (<StylingPage styling={styling} setStyling={setStyling} />)}
           {step === ConfigPage.Editing && (
-            <EditingPage panels={panels} setPanels={setPanels} />)}
+            <EditingPage
+              title={title}
+              setTitle={setTitle}
+              flashcards={flashcards}
+              setFlashcards={setFlashcards}
+            />
+          )}
         </div>
 
         <div className="xblock-actions">

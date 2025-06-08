@@ -7,11 +7,17 @@ const mockRuntime: XBlockRuntime = {
 };
 
 renderEditor(mockRuntime, document.querySelector('#root'), {
-  panels: [
+  title: 'Sample Deck',
+  flashcards: [
     {
-      title: 'test',
-      contents: '<b>Test</b>',
+      front: '<b>Question 1</b>',
+      back: '<b>Answer 1</b>',
     },
   ],
-  styling: {},
+  styling: {
+    fontSize: '16px',
+    backgroundColor: '#f8f9fa',
+    textColor: '#212529',
+    borderColor: '#dee2e6',
+  },
 });

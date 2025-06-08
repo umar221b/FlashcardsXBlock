@@ -1,11 +1,12 @@
 /// <reference types="vite/client" />
 declare let $: JQueryStatic;
 
-type Panel = {
-  title: string | null; contents: string; expanded?: boolean;
+type Flashcard = {
+  front: string;
+  back: string;
 };
 
-type PanelStyling = {
+type FlashcardStyling = {
   fontSize?: string,
   backgroundColor?: string,
   textColor?: string,
@@ -18,6 +19,7 @@ interface XBlockRuntime {
 }
 
 interface XBlockData {
-  panels: Panel[],
-  styling: PanelStyling,
+  title: string,
+  flashcards: Flashcard[],
+  styling: FlashcardStyling,
 }

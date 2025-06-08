@@ -7,15 +7,15 @@ import {browserslistToTargets} from "lightningcss";
 // https://vitejs.dev/config/
 export default defineConfig(({command, mode}) => {
     let lib = 'student-ui';
-    let libName = 'AccordionBlock';
+    let libName = 'FlashcardsBlock';
     if (process.env.COMPONENT === 'studio-ui') {
         lib = 'studio-ui';
-        libName = 'AccordionEditor';
+        libName = 'FlashcardsEditor';
     }
     return {
         base: "",
         build: {
-            outDir: '../accordion/public',
+            outDir: '../flashcards/public',
             lib: {
                 entry: resolve(__dirname, `src/${lib}/index.tsx`),
                 name: libName,

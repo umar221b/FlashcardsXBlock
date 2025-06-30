@@ -107,11 +107,7 @@ class FlashcardsXBlock(XBlock):
             "url": self.runtime.local_resource_url(self, "public/studio-ui.js"),
         }
 
-        frag = Fragment(
-            self.loader.render_django_template(
-                "static/html/new_studio.html", context=context,
-            ),
-        )
+        frag = Fragment(self.loader.render_django_template("static/html/studio.html", context=context))
         frag.add_javascript(self.loader.load_unicode("static/js/studio.js"))
         frag.add_css_url(self.runtime.local_resource_url(self, "public/studio-ui.css"))
         frag.initialize_js("FlashcardsEditor", context)

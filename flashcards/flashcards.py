@@ -1,16 +1,20 @@
 """
-Flashcards XBlock allowes the editor to add a list of quesitions and
+An XBlock for displaying flashcards.
+
+Flashcards XBlock allows the editor to add a list of questions and
 answers (separated by a semicolon) which are then displayed as flashcards.
 """
 
-from xblock.core import XBlock
-from xblock.fields import Scope, String, List
 from web_fragments.fragment import Fragment
+from xblock.core import XBlock
+from xblock.fields import List, Scope, String
 from xblock.utils.resources import ResourceLoader
 
 
 class FlashcardsXBlock(XBlock):
     """
+    The FlashcardsXBlock class.
+
     The content (the values between the <flashcards> tags) is saved as a
     list of flashcard objects and passed as an array to the HTML template.
     """
@@ -18,20 +22,20 @@ class FlashcardsXBlock(XBlock):
     loader = ResourceLoader(__name__)
     display_name = String(
         display_name="Display Name",
-        default="Flashcards",
+        default="Flashcards", # type: ignore[assignment]
         scope=Scope.settings,
         help="The title of the XBlock. It is displayed to the learners.",
     )
 
-    content = List(default=[], scope=Scope.settings, help="List of items")
+    content = List(default=[], scope=Scope.settings, help="List of items")  # type: ignore[assignment]
 
-    def student_view(self, context=None):
+    def student_view(self, context: dict | None = None) -> Fragment:
         """Create fragment and send the appropriate context."""
         styling = {
             "fontSize": "16px",
             "backgroundColor": "#f8f9fa",
             "textColor": "#212529",
-            "borderColor": "#dee2e6"
+            "borderColor": "#dee2e6",
         }
 
         context = {
@@ -48,7 +52,7 @@ class FlashcardsXBlock(XBlock):
         return frag
 
     @classmethod
-    def parse_xml(cls, node, runtime, keys, id_generator):
+    def parse_xml(cls, node, runtime, keys, id_generator) -> XBlock:  # noqa: ANN001, ARG003
         """
         Parse the XML for an HTML block.
 
@@ -62,18 +66,17 @@ class FlashcardsXBlock(XBlock):
         block = runtime.construct_xblock_from_class(cls, keys)
         flashcards = []
 
-        for element in node.iter("flashcard"):
-            flashcards.append({
-                "front": element.attrib["front"],
-                "back": element.attrib["back"]
-            })
+        flashcards = [
+            {"front": element.attrib["front"], "back": element.attrib["back"]}
+            for element in node.iter("flashcard")
+        ]
 
         block.content = flashcards
         block.title = node.attrib["title"]
         return block
 
     @staticmethod
-    def workbench_scenarios():
+    def workbench_scenarios() -> list[tuple[str, str]]:
         """A canned scenario for display in the workbench."""
         return [
             (
@@ -88,26 +91,26 @@ class FlashcardsXBlock(XBlock):
             ),
         ]
 
-    def studio_view(self, context):
+    def studio_view(self, context: dict) -> Fragment:
         """Create a fragment used to display the edit view in the Studio."""
         styling = {
             "fontSize": "16px",
             "backgroundColor": "#f8f9fa",
             "textColor": "#212529",
-            "borderColor": "#dee2e6"
+            "borderColor": "#dee2e6",
         }
 
         context = {
             "title": self.display_name,
             "flashcards": self.content,
             "styling": styling,
-            "url": self.runtime.local_resource_url(self, "public/studio-ui.js")
+            "url": self.runtime.local_resource_url(self, "public/studio-ui.js"),
         }
 
         frag = Fragment(
             self.loader.render_django_template(
-                "static/html/new_studio.html", context=context
-            )
+                "static/html/new_studio.html", context=context,
+            ),
         )
         frag.add_javascript(self.loader.load_unicode("static/js/studio.js"))
         frag.add_css_url(self.runtime.local_resource_url(self, "public/studio-ui.css"))
@@ -115,7 +118,7 @@ class FlashcardsXBlock(XBlock):
         return frag
 
     @XBlock.json_handler
-    def studio_submit(self, data, suffix=""):
+    def studio_submit(self, data: dict, suffix: str = "") -> dict[str, str]:  # noqa: ARG002
         """Called when submitting the form in Studio."""
         self.display_name = data.get("title")
         self.content = data.get("flashcards")

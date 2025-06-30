@@ -91,7 +91,7 @@ class FlashcardsXBlock(XBlock):
             ),
         ]
 
-    def studio_view(self, context: dict) -> Fragment:
+    def studio_view(self, context: dict | None = None) -> Fragment:
         """Create a fragment used to display the edit view in the Studio."""
         styling = {
             "fontSize": "16px",

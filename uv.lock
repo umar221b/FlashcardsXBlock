@@ -341,7 +341,7 @@ wheels = [
 
 [[package]]
 name = "flashcardsxblock"
-version = "1.0.0"
+version = "1.0.0rc2"
 source = { virtual = "." }
 dependencies = [
     { name = "xblock" },
@@ -356,7 +356,10 @@ dev = [
     { name = "code-annotations" },
     { name = "diff-cover" },
     { name = "edx-i18n-tools" },
+    { name = "openedx-django-pyfs" },
     { name = "pytest-cov" },
+    { name = "pytest-django" },
+    { name = "pytest-env" },
     { name = "ruff" },
     { name = "tox" },
     { name = "tox-uv" },
@@ -367,7 +370,10 @@ quality = [
 ]
 test = [
     { name = "code-annotations" },
+    { name = "openedx-django-pyfs" },
     { name = "pytest-cov" },
+    { name = "pytest-django" },
+    { name = "pytest-env" },
     { name = "xblock-sdk" },
 ]
 
@@ -383,7 +389,10 @@ dev = [
     { name = "code-annotations" },
     { name = "diff-cover" },
     { name = "edx-i18n-tools" },
+    { name = "openedx-django-pyfs" },
     { name = "pytest-cov" },
+    { name = "pytest-django" },
+    { name = "pytest-env" },
     { name = "ruff" },
     { name = "tox" },
     { name = "tox-uv" },
@@ -392,7 +401,10 @@ dev = [
 quality = [{ name = "ruff" }]
 test = [
     { name = "code-annotations" },
+    { name = "openedx-django-pyfs" },
     { name = "pytest-cov" },
+    { name = "pytest-django" },
+    { name = "pytest-env" },
     { name = "xblock-sdk" },
 ]
 
@@ -621,6 +633,20 @@ wheels = [
 ]
 
 [[package]]
+name = "openedx-django-pyfs"
+version = "3.8.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+    { name = "fs" },
+    { name = "fs-s3fs" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/6a/50/4c44ec88e72e99bbee33fd74c6540d28e8e94e60da2d21bbf9e93562e8b2/openedx_django_pyfs-3.8.0.tar.gz", hash = "sha256:79f19822880fcabb91531bf578a133b8b86381c160f030436c3fd1bbc616b420", size = 19814, upload-time = "2025-05-06T14:58:32.342Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f9/a5/20f1d740accdde884710ad155275a4c6f22d8dc3ade4dc9c3380d43877f1/openedx_django_pyfs-3.8.0-py3-none-any.whl", hash = "sha256:5b17122534d0febf38729fa994d581db5fffc55565895b0290884116cea3892f", size = 13755, upload-time = "2025-05-06T14:58:31.213Z" },
+]
+
+[[package]]
 name = "packaging"
 version = "25.0"
 source = { registry = "https://pypi.org/simple" }
@@ -735,6 +761,30 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/18/99/668cade231f434aaa59bbfbf49469068d2ddd945000621d3d165d2e7dd7b/pytest_cov-6.2.1.tar.gz", hash = "sha256:25cc6cc0a5358204b8108ecedc51a9b57b34cc6b8c967cc2c01a4e00d8a67da2", size = 69432, upload-time = "2025-06-12T10:47:47.684Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/bc/16/4ea354101abb1287856baa4af2732be351c7bee728065aed451b678153fd/pytest_cov-6.2.1-py3-none-any.whl", hash = "sha256:f5bc4c23f42f1cdd23c70b1dab1bbaef4fc505ba950d53e0081d0730dd7e86d5", size = 24644, upload-time = "2025-06-12T10:47:45.932Z" },
+]
+
+[[package]]
+name = "pytest-django"
+version = "4.11.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pytest" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b1/fb/55d580352db26eb3d59ad50c64321ddfe228d3d8ac107db05387a2fadf3a/pytest_django-4.11.1.tar.gz", hash = "sha256:a949141a1ee103cb0e7a20f1451d355f83f5e4a5d07bdd4dcfdd1fd0ff227991", size = 86202, upload-time = "2025-04-03T18:56:09.338Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/be/ac/bd0608d229ec808e51a21044f3f2f27b9a37e7a0ebaca7247882e67876af/pytest_django-4.11.1-py3-none-any.whl", hash = "sha256:1b63773f648aa3d8541000c26929c1ea63934be1cfa674c76436966d73fe6a10", size = 25281, upload-time = "2025-04-03T18:56:07.678Z" },
+]
+
+[[package]]
+name = "pytest-env"
+version = "1.1.5"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pytest" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/1f/31/27f28431a16b83cab7a636dce59cf397517807d247caa38ee67d65e71ef8/pytest_env-1.1.5.tar.gz", hash = "sha256:91209840aa0e43385073ac464a554ad2947cc2fd663a9debf88d03b01e0cc1cf", size = 8911, upload-time = "2024-09-17T22:39:18.566Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/de/b8/87cfb16045c9d4092cfcf526135d73b88101aac83bc1adcf82dfb5fd3833/pytest_env-1.1.5-py3-none-any.whl", hash = "sha256:ce90cf8772878515c24b31cd97c7fa1f4481cd68d588419fd45f10ecaee6bc30", size = 6141, upload-time = "2024-09-17T22:39:16.942Z" },
 ]
 
 [[package]]

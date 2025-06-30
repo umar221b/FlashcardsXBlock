@@ -36,8 +36,11 @@ flashcards = ["static/**/*", "public/**/*"]
 [dependency-groups]
 test = [
     "pytest-cov",                # pytest extension for code coverage statistics
+    "pytest-django",             # Django integration for pytest
+    "pytest-env",                # pytest plugin to set environment variables
     "code-annotations",          # provides commands used by the pii_check make target
     "xblock-sdk",                # provides workbench settings for testing
+    "openedx-django-pyfs"        # provides a dummy file system for testing
 ]
 ci = [
     "tox",                       # Virtualenv management for tests
@@ -65,8 +68,7 @@ constraint-dependencies = [
 ]
 
 [tool.coverage.run]
-include = ['flashcards/**']
-omit = ['tests/*']
+omit = ['flashcards/tests/*']
 
 [tool.ruff]
 line-length = 120
@@ -165,6 +167,10 @@ allow-magic-value-types = ['int', 'str']
 
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "workbench.settings"
-addopts = "--cov flashcards --cov tests --cov-report term-missing --cov-report xml"
+env = "DJANGO_SETTINGS_MODULE=workbench.settings"
+addopts = "--cov flashcards --cov-report term-missing --cov-report xml"
 norecursedirs = ".* docs requirements site-packages"
+filterwarnings = [
+    "ignore:Runtime.user_id is deprecated:DeprecationWarning",
+    "ignore:'cgi' is deprecated:DeprecationWarning",
+]

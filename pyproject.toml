@@ -31,7 +31,7 @@ include = ["flashcards", "flashcards.*"]
 exclude = ["*tests"]
 
 [tool.setuptools.package-data]
-flashcards = ["*.css", "*.js", "*.html", "static/**/*", "templates/**/*"]
+flashcards = ["static/**/*", "public/**/*"]
 
 [dependency-groups]
 test = [

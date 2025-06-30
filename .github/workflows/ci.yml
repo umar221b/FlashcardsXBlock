@@ -30,7 +30,12 @@ jobs:
     - name: Run Tests
       env:
         TOXENV: ${{ matrix.toxenv }}
-      run: uv run tox
+      run: |
+        if [ "${{ matrix.toxenv }}" = "quality" ]; then
+          uv run tox -- --output-format github
+        else
+          uv run tox
+        fi
 
     - name: Run coverage
       if: matrix.python-version == '3.11' && matrix.toxenv == 'django42'

@@ -40,7 +40,7 @@ test = [
     "pytest-env",                # pytest plugin to set environment variables
     "code-annotations",          # provides commands used by the pii_check make target
     "xblock-sdk",                # provides workbench settings for testing
-    "openedx-django-pyfs"        # provides a dummy file system for testing
+    "openedx-django-pyfs",       # provides a dummy file system for testing
 ]
 ci = [
     "tox",                       # Virtualenv management for tests
@@ -55,16 +55,17 @@ dev = [
     {include-group = "quality"},
     "diff-cover",                # Changeset diff test coverage
     "edx-i18n-tools",            # For i18n_tool dummy
+    # External dev constraints (DO NOT REMOVE THIS LINE)
+    "Django<5.0",
 ]
 
 [tool.uv]
 constraint-dependencies = [
     # External constraints (DO NOT REMOVE THIS LINE)
-    "Django<5.0",
     "elasticsearch<7.14.0",
     "django-simple-history==3.0.0",
     "pip<24.3",
-    "urllib3<2.3.0"
+    "urllib3<2.3.0",
 ]
 
 [tool.coverage.run]
@@ -140,6 +141,7 @@ ignore = [
     'ANN002', # missing-type-args
     'ANN003', # missing-type-kwargs
     'ANN204', # missing-return-type-special-method
+    'COM812', # missing-trailing-comma (incompatible with ruff formatter)
     'D203',   # one-blank-line-before-class
     'D212',   # multi-line-summary-first-line (incompatible with D213)
     'Q000',   # bad-quotes-inline-string

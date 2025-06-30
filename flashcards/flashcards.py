@@ -22,7 +22,7 @@ class FlashcardsXBlock(XBlock):
     loader = ResourceLoader(__name__)
     display_name = String(
         display_name="Display Name",
-        default="Flashcards", # type: ignore[assignment]
+        default="Flashcards",  # type: ignore[assignment]
         scope=Scope.settings,
         help="The title of the XBlock. It is displayed to the learners.",
     )
@@ -67,8 +67,7 @@ class FlashcardsXBlock(XBlock):
         flashcards = []
 
         flashcards = [
-            {"front": element.attrib["front"], "back": element.attrib["back"]}
-            for element in node.iter("flashcard")
+            {"front": element.attrib["front"], "back": element.attrib["back"]} for element in node.iter("flashcard")
         ]
 
         block.content = flashcards

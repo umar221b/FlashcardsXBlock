@@ -7,8 +7,7 @@ import pkg_resources
 
 from xblock.core import XBlock
 from xblock.fields import Scope, Dict, String, List
-from web_fragments.fragment import Fragment
-from xblock.utils.resources import ResourceLoader
+from xblock.fragment import Fragment
 
 from jinja2 import Environment, PackageLoader
 
@@ -21,7 +20,6 @@ class FlashcardsXBlock(XBlock):
     dictionary and passed as a dictionary to the HTML template
     """
 
-    loader = ResourceLoader(__name__)
     title = String(
         default="",
         scope=Scope.settings,
@@ -42,15 +40,14 @@ class FlashcardsXBlock(XBlock):
             "title": self.title,
         }
 
-        frag = Fragment(
-            self.loader.render_django_template(
-                "static/html/flashcards.html", context=context
-            )
-        )
-        # frag.add_content()
+        frag = Fragment()
+        template = env.get_template("flashcards.html")
+        frag.add_content(template.render(**context))
+
         frag.add_css(self.resource_string("static/css/flashcards.css"))
         frag.add_javascript(self.resource_string("static/js/src/flashcards.js"))
-        frag.initialize_js("FlashcardsXBlock", context)
+        frag.initialize_js('FlashcardsXBlock')
+        
         return frag
 
     @classmethod

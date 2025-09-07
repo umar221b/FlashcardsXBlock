@@ -83,7 +83,7 @@
 .next-btn, .prev-btn {
     line-height:50px;
     width:100px;
-    margin:10px auto;
+    margin:10px 0;
     cursor: pointer;
     background-color: #07CC72;
     font-weight: 600;
@@ -99,6 +99,6 @@
 }
 
 .next-btn:hover, .prev-btn:hover {
-    background-color: #00D372;
-    background-image:none;
+    background-color: #00D372!important;
+    background-image:none!important;
 }

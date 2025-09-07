@@ -20,11 +20,11 @@ function FlashcardsXBlock(runtime, element, params) {
     $('#fc-answer').html(`${params.flashcards[currentNumber]["back"]}`)
     $('#current-fc').html(`${currentNumber + 1}`);
     $('.next-btn').html('Next');
+    $('.prev-btn').removeAttr('disabled');
     /* If the student reaches the end say FINISHED and disable going further */
     if (currentNumber == totalNumber - 1) {
       $('.next-btn').html('You did it!');
       $('.next-btn').attr('disabled','disabled');
-      $('.prev-btn').removeAttr('disabled');
     }
   }
 
@@ -35,10 +35,10 @@ function FlashcardsXBlock(runtime, element, params) {
     $('#fc-question').html(`${params.flashcards[currentNumber]["front"]}`);
     $('#fc-answer').html(`${params.flashcards[currentNumber]["back"]}`)
     $('#current-fc').html(`${currentNumber + 1}`);
+    $('.next-btn').removeAttr('disabled');
     /* If the student reaches the beginning disable going back any further */
     if (currentNumber == 0) {
       $('.prev-btn').attr('disabled','disabled');
-      $('.next-btn').removeAttr('disabled');
     }
   }
 

@@ -101,4 +101,8 @@
 .next-btn:hover, .prev-btn:hover {
     background-color: #00D372!important;
     background-image:none!important;
+    text-shadow: none!important;
+    border: none!important;
+    transition: none!important;
+    box-shadow: none!important;
 }

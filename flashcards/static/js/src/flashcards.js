@@ -12,19 +12,36 @@ function FlashcardsXBlock(runtime, element, params) {
     $('.fc-card').toggleClass('is-flipped');
   });
 
-  $('.next-btn').click(function () {
+  function next() {
     currentNumber++;
     $('.fc-card').removeClass('is-flipped');
     $('.fc-container').show();
     $('#fc-question').html(`${params.flashcards[currentNumber]["front"]}`);
     $('#fc-answer').html(`${params.flashcards[currentNumber]["back"]}`)
     $('#current-fc').html(`${currentNumber + 1}`);
-    $('.next-btn').html('Nextt');
+    $('.next-btn').html('Next');
     /* If the student reaches the end say FINISHED and disable going further */
     if (currentNumber == totalNumber - 1) {
       $('.next-btn').html('You did it!');
-      $('.next-btn').addClass('finished-btn').removeClass('next-btn').off('click');
+      $('.next-btn').attr('disabled','disabled');
+      $('.prev-btn').removeAttr('disabled');
     }
-  });
-}
+  }
 
+  function prev() {
+    currentNumber--;
+    $('.fc-card').removeClass('is-flipped');
+    $('.fc-container').show();
+    $('#fc-question').html(`${params.flashcards[currentNumber]["front"]}`);
+    $('#fc-answer').html(`${params.flashcards[currentNumber]["back"]}`)
+    $('#current-fc').html(`${currentNumber + 1}`);
+    /* If the student reaches the beginning disable going back any further */
+    if (currentNumber == 0) {
+      $('.prev-btn').attr('disabled','disabled');
+      $('.next-btn').removeAttr('disabled');
+    }
+  }
+
+  $('.next-btn').click(next);
+  $('.prev-btn').click(prev);
+}

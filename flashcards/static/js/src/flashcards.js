@@ -13,13 +13,16 @@ function FlashcardsXBlock(runtime, element, params) {
   });
 
   function next() {
+    if (currentNumber == -1) {
+      $('.prev-btn').show();
+      $('.next-btn').html('Next');
+    }
     currentNumber++;
     $('.fc-card').removeClass('is-flipped');
     $('.fc-container').show();
     $('#fc-question').html(`${params.flashcards[currentNumber]["front"]}`);
     $('#fc-answer').html(`${params.flashcards[currentNumber]["back"]}`)
     $('#current-fc').html(`${currentNumber + 1}`);
-    $('.next-btn').html('Next');
     if (currentNumber > 0)
       $('.prev-btn').removeAttr('disabled');
     /* If the student reaches the end say FINISHED and disable going further */

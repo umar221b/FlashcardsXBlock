@@ -31,14 +31,12 @@
 .fc-container {
   perspective: 900px;
   width: 60%;
-  min-height: 10em;
+  height: 10em;
   display:inline-block;
   text-align:center;
   color: black;
   font-weight: bold;
-  font-size: 1.5rem
-24px
-;
+  font-size: 1.5rem;
 }
 
 .fc-card {
@@ -79,7 +77,7 @@
 .fc-card-face p {
   word-break: break-word;
   padding: 2rem;
-  margin-bottom: 0;
+  margin-bottom: 0!important;
 }
 
 .buttons-div {
